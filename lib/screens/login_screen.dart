@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kiranjaapp_supplier/screens/registration_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -7,9 +8,17 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Center(
-        child: Text("Login Screen"),
+        child: InkWell(
+            onTap: () {
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) =>
+                          const RegistrationScreen()));
+            },
+            child: const Text("Login Screen")),
       ),
     );
   }
