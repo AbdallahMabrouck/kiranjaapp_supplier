@@ -11,6 +11,8 @@ import 'registration_screen.dart';
 class LandingScreen extends StatelessWidget {
   const LandingScreen({super.key});
 
+  static const id = "landing-screen";
+
   @override
   Widget build(BuildContext context) {
     FirebaseServices _services = FirebaseServices();
@@ -41,7 +43,7 @@ class LandingScreen extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Container(
+                  SizedBox(
                     height: 80,
                     width: 80,
                     child: ClipRRect(

@@ -1,9 +1,11 @@
 import 'dart:io';
+import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:kiranjaapp_supplier/provider/product_provider.dart';
 
 class FirebaseServices {
   User? user = FirebaseAuth.instance.currentUser;
@@ -33,7 +35,7 @@ class FirebaseServices {
     return downloadURL;
   }
 
-  /*Future<List> uploadFiles(
+  Future<List> uploadFiles(
       {List<XFile>? images, String? ref, ProductProvider? provider}) async {
     var imageUrls = await Future.wait(
       images!.map(
@@ -53,7 +55,7 @@ class FirebaseServices {
     firebase_storage.UploadTask uploadTask = storageReference.putFile(image!);
     await uploadTask;
     return storageReference.getDownloadURL();
-  }*/
+  }
 
   Future<void> addVendor({Map<String, dynamic>? data}) {
     // call the user's collectionReference to add a new user
@@ -61,12 +63,12 @@ class FirebaseServices {
         "User added")) /*.catchError((error) => print("Failed to add user : $error"))*/;
   }
 
-  /*Future<void> saveToDb({Map<String, dynamic>? data, BuildContext? context}) {
+  Future<void> saveToDb({Map<String, dynamic>? data, BuildContext? context}) {
     // call the user's collectionReference to add a new user
     return products
         .add(data)
         .then((value) => scaffold(context, "Product saved"));
-  }*/
+  }
 
   String formattedDate(date) {
     var outputFormat = DateFormat("dd/MM/yyy hr:min aa");
@@ -80,7 +82,7 @@ class FirebaseServices {
     return formattedNumber;
   }
 
-  /*Widget formField(
+  Widget formField(
       {String? label,
       TextInputType? inputType,
       void Function(String)? onChanged,
@@ -110,5 +112,5 @@ class FirebaseServices {
             ScaffoldMessenger.of(context).clearSnackBars();
           }),
     ));
-  }*/
+  }
 }

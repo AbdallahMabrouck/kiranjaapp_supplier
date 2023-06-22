@@ -19,12 +19,16 @@ dependencies:
   flutter_easyloading: ^3.0.5
   image_picker: ^0.8.9
   csc_picker: ^0.2.7
-  intl: ^0.18.1
+  intl: ^0.18.0
   cloud_firestore: ^4.8.1
   firebase_storage: ^11.2.3
   firebase_auth: ^4.6.3
   email_validator: ^2.1.17
   cached_network_image: ^3.2.3
+  firebase_ui_firestore: ^1.5.3
+  provider: ^6.0.5
+  search_page: ^2.3.0
+  flutter_slidable: ^3.0.0
 
 dev_dependencies:
   flutter_test:

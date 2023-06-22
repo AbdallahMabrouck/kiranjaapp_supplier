@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kiranjaapp_supplier/screens/registration_screen.dart';
+
+import 'home_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -15,8 +16,7 @@ class LoginScreen extends StatelessWidget {
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                      builder: (BuildContext context) =>
-                          const RegistrationScreen()));
+                      builder: (BuildContext context) => const HomeScreen()));
             },
             child: const Text("Login Screen")),
       ),

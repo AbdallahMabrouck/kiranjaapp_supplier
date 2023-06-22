@@ -90,10 +90,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       return;
     }
 
-    if (_formKey.currentState!.validate()) {}
-    if (countryValue == null || stateValue == null || cityValue == null) {
-      _scaffold("Select address field completely");
-      return;
+    if (_formKey.currentState!.validate()) {
+      if (countryValue == null || stateValue == null || cityValue == null) {
+        _scaffold("Select address field completely");
+        return;
+      }
     }
     EasyLoading.show(status: "Please Wait...");
     _services
@@ -105,39 +106,40 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         });
       }
     }).then((value) {
-      _services
-          .uploadImage(
-              _logoUrl as XFile?, "Vendors/${_services.user!.uid}/logo.jpg")
-          .then((url) {
-        setState(() {
-          _logoUrl = url;
+      if (_logoUrl != null) {
+        _services
+            .uploadImage(_logo, "Vendors/${_services.user!.uid}/logo.jpg")
+            .then((url) {
+          setState(() {
+            _logoUrl = url;
+          });
+        }).then((value) {
+          _services.addVendor(
+            data: {
+              "shopImage": _shopImageUrl,
+              "logo": _logoUrl,
+              "businessName": _businessName.text,
+              "mobile": "+255{$_contactNumber.text}",
+              "email": _emailAddress.text,
+              "tax Registered": _taxStatus,
+              "tinNumber": _tin.text.isEmpty ? null : _tin.text,
+              "pinCode": _pinCode.text,
+              "landMark": _landMark.text,
+              "country": countryValue,
+              "state": stateValue,
+              "city": cityValue,
+              "approved": false,
+              "uid": _services.user!.uid,
+              "time": DateTime.now(),
+            },
+          ).then((value) {
+            EasyLoading.dismiss();
+            return Navigator.of(context).pushReplacement(MaterialPageRoute(
+              builder: (BuildContext context) => const LandingScreen(),
+            ));
+          });
         });
-      }).then((value) {
-        _services.addVendor(
-          data: {
-            "shopImage": _shopImageUrl,
-            "logo": _logoUrl,
-            "businessName": _businessName.text,
-            "mobile": "+255{$_contactNumber.text}",
-            "email": _emailAddress.text,
-            "tax Registered": _taxStatus,
-            "tinNumber": _tin.text.isEmpty ? null : _tin.text,
-            "pinCode": _pinCode.text,
-            "landMark": _landMark.text,
-            "country": countryValue,
-            "state": stateValue,
-            "city": cityValue,
-            "approved": false,
-            "uid": _services.user!.uid,
-            "time": DateTime.now(),
-          },
-        ).then((value) {
-          EasyLoading.dismiss();
-          return Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder: (BuildContext context) => const LandingScreen(),
-          ));
-        });
-      });
+      }
     });
   }
 
@@ -414,7 +416,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       countryFilter: const [
                         CscCountry.India,
                         CscCountry.United_States,
-                        CscCountry.Canada
+                        CscCountry.Canada,
+                        CscCountry.Tanzania,
+                        CscCountry.Kenya,
+                        CscCountry.Uganda,
+                        CscCountry.Malawi,
                       ],
 
                       ///selected item style [OPTIONAL PARAMETER]
