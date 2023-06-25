@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:kiranjaapp_supplier/screens/home_screen.dart';
 import 'package:kiranjaapp_supplier/screens/landing_screen.dart';
 import 'package:kiranjaapp_supplier/screens/login_screen.dart';
 
