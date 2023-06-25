@@ -25,72 +25,75 @@ class CustomDrawer extends StatelessWidget {
     }
 
     return Drawer(
-      child: Column(
-        children: [
-          Container(
-            height: 86,
-            color: Theme.of(context).primaryColor,
-            child: Row(
-              children: [
-                DrawerHeader(
-                  child: _vendorData.doc == null
-                      ? const Text(
-                          "Fetching...",
-                          style: TextStyle(color: Colors.white),
-                        )
-                      : Row(
-                          children: [
-                            Row(
-                              children: [
-                                CachedNetworkImage(
-                                    imageUrl: _vendorData.doc!["logo"]),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  _vendorData.doc!["businessName"],
-                                  style: const TextStyle(color: Colors.white),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                ),
-              ],
+      child: SafeArea(
+        child: Column(
+          children: [
+            Container(
+              height: 86,
+              color: Theme.of(context).primaryColor,
+              child: Row(
+                children: [
+                  DrawerHeader(
+                    child: _vendorData.doc == null
+                        ? const Text(
+                            "Fetching...",
+                            style: TextStyle(color: Colors.white),
+                          )
+                        : Row(
+                            children: [
+                              Row(
+                                children: [
+                                  CachedNetworkImage(
+                                      imageUrl: _vendorData.doc!["logo"]),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    _vendorData.doc!["businessName"],
+                                    style: const TextStyle(color: Colors.white),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                  ),
+                ],
+              ),
             ),
-          ),
-          Expanded(
-            child: ListView(
-              padding: EdgeInsets.zero,
-              children: [
-                _menu(
-                    menuTitle: "Home",
-                    icon: Icons.home_outlined,
-                    route: HomeScreen.id),
-                ExpansionTile(
-                  leading: const Icon(Icons.weekend_outlined),
-                  title: const Text("Products"),
-                  children: [
-                    _menu(menuTitle: "All Products", route: ProductScreen.id),
-                    _menu(
-                        menuTitle: "Add Products", route: AddProductScreen.id),
-                  ],
-                ),
-              ],
+            Expanded(
+              child: ListView(
+                padding: EdgeInsets.zero,
+                children: [
+                  _menu(
+                      menuTitle: "Home",
+                      icon: Icons.home_outlined,
+                      route: HomeScreen.id),
+                  ExpansionTile(
+                    leading: const Icon(Icons.weekend_outlined),
+                    title: const Text("Products"),
+                    children: [
+                      _menu(menuTitle: "All Products", route: ProductScreen.id),
+                      _menu(
+                          menuTitle: "Add Products",
+                          route: AddProductScreen.id),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-          const Divider(
-            color: Colors.grey,
-          ),
-          ListTile(
-            title: const Text("Sign Out"),
-            trailing: const Icon(Icons.exit_to_app),
-            onTap: () {
-              FirebaseAuth.instance.signOut();
-              Navigator.pushReplacementNamed(context, LoginScreen.id);
-            },
-          )
-        ],
+            const Divider(
+              color: Colors.grey,
+            ),
+            ListTile(
+              title: const Text("Sign Out"),
+              trailing: const Icon(Icons.exit_to_app),
+              onTap: () {
+                FirebaseAuth.instance.signOut();
+                Navigator.pushReplacementNamed(context, LoginScreen.id);
+              },
+            )
+          ],
+        ),
       ),
     );
   }
