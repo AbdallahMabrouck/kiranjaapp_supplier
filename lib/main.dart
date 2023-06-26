@@ -8,6 +8,7 @@ import 'package:kiranjaapp_supplier/screens/registration_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'screens/add_product_screen.dart';
+import 'screens/auth_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/product_screen.dart';
@@ -48,12 +49,13 @@ class MyApp extends StatelessWidget {
       builder: EasyLoading.init(),
       routes: {
         SplashScreen.id: (context) => const SplashScreen(),
-        LoginScreen.id: (context) => const LoginScreen(),
-        LandingScreen.id: (context) => const LandingScreen(),
-        RegistrationScreen.id: (context) => const RegistrationScreen(),
-        HomeScreen.id: (context) => const HomeScreen(),
-        ProductScreen.id: (context) => const ProductScreen(),
-        AddProductScreen.id: (context) => const AddProductScreen(),
+        AuthPage.id: (context) => const AuthPage(),
+        // LoginScreen.id: (context) => const LoginScreen(),
+        // LandingScreen.id: (context) => const LandingScreen(),
+        // RegistrationScreen.id: (context) => const RegistrationScreen(),
+        // HomeScreen.id: (context) => const HomeScreen(),
+        // ProductScreen.id: (context) => const ProductScreen(),
+        // AddProductScreen.id: (context) => const AddProductScreen(),
       },
     );
   }
