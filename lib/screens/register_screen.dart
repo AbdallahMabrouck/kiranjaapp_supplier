@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../widgets/image_picker.dart';
+import '../widgets/register_form.dart';
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});
@@ -16,8 +18,8 @@ class RegisterScreen extends StatelessWidget {
               scrollDirection: Axis.vertical,
               child: Column(
                 children: [
-                  // const ShopPicCard(),
-                  // const RegisterForm(),
+                  const ShopPicCard(),
+                  const RegisterForm(),
                   Row(
                     children: [
                       ElevatedButton(
