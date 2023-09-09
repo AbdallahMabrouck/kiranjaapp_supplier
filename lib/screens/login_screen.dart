@@ -2,6 +2,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../provider/auth_provider.dart';
+import '../widgets/reset_password.dart';
 import 'home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -15,11 +16,12 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
-  Icon icon;
+  Icon icon = const Icon(Icons.email_outlined);
+  // initializing with an icon
   bool _visible = false;
   final _emailTextControler = TextEditingController();
-  String email;
-  String password;
+  String email = "";
+  String password = "";
   bool _loading = false;
 
   @override
@@ -147,8 +149,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     Row(
                       children: [
                         Expanded(
-                          child: TextButton(
-                              // color: Theme.of(context).primaryColor
+                          child: ElevatedButton(
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                  Theme.of(context).primaryColor,
+                                ),
+                              ),
                               onPressed: () {
                                 if (_formKey.currentState!.validate()) {
                                   setState(() {
