@@ -112,14 +112,17 @@ class AuthProvider extends ChangeNotifier {
     try {
       userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
-    } on FirebaseAuthException {
-      // Handle exceptions
+    } on FirebaseAuthException catch (e) {
+      error = e.code;
+      notifyListeners();
     } catch (e) {
-      // Handle other exceptions
+      error = e.toString();
+      notifyListeners();
     }
     return userCredential;
   }
 
+  // reset password
   Future<void> resetPassword(String email) async {
     this.email = email;
     notifyListeners();
