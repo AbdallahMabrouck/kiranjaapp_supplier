@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +23,8 @@ class AuthProvider extends ChangeNotifier {
   // reduce image size
   Future<File?> getImage() async {
     final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery, imageQuality: 20);
+    final pickedFile =
+        await picker.pickImage(source: ImageSource.gallery, imageQuality: 20);
     if (pickedFile != null) {
       image = File(pickedFile.path);
       notifyListeners();
@@ -61,55 +64,54 @@ class AuthProvider extends ChangeNotifier {
     shopLongitude = _locationData.longitude;
     notifyListeners();
 
-    final coordinates =
-        Coordinates(_locationData.latittude, _locationData.longitude);
-    var _addresses =
-        await Geocoder.local.findAddressesFromCoordinates(coordinates);
-    var shopAddress = _addresses.first;
-    this.shopAddress = shopAddress.addressLine;
-    this.placeName = shopAddress.featureName;
-    notifyListeners();
-    return shopAddress;
+    // Perform reverse geocoding using Google Maps Geocoding API
+    const apiKey = 'YOUR_GOOGLE_MAPS_API_KEY';
+    final response = await http.get(
+      Uri.parse(
+          'https://maps.googleapis.com/maps/api/geocode/json?latlng=${_locationData.latitude},${_locationData.longitude}&key=$apiKey'),
+    );
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      if (data['results'] != null && data['results'].isNotEmpty) {
+        final address = data['results'][0]['formatted_address'];
+        shopAddress = address;
+        placeName = address;
+        notifyListeners();
+      }
+    }
   }
 
-// register vendor using email
-
- Future<UserCredential?> registerVendor(String email, String password) async {
+  // register vendor using email
+  Future<UserCredential?> registerVendor(String email, String password) async {
     this.email = email;
     notifyListeners();
     UserCredential? userCredential;
     try {
-      userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+      userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
       if (e.code == "weak-password") {
         error = "The password provided is too weak";
         notifyListeners();
-       
       } else if (e.code == "email-already-in-use") {
         error = "The account already exists for that email";
         notifyListeners();
-        
       }
     } catch (e) {
       error = e.toString();
       notifyListeners();
-     
+    }
     return userCredential;
   }
-
 
   Future<UserCredential?> loginVendor(String email, String password) async {
     this.email = email;
     notifyListeners();
     UserCredential? userCredential;
     try {
-      userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+      userCredential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException {
       // Handle exceptions
     } catch (e) {
@@ -118,14 +120,11 @@ class AuthProvider extends ChangeNotifier {
     return userCredential;
   }
 
-
   Future<void> resetPassword(String email) async {
     this.email = email;
     notifyListeners();
     try {
-      await FirebaseAuth.instance.sendPasswordResetEmail(
-        email: email,
-      );
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
     } on FirebaseAuthException {
       // Handle exceptions
     } catch (e) {
@@ -133,17 +132,16 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-
-
   // save vendor data to Firestore
- Future<void> saveVendorDataToDb({
+  Future<void> saveVendorDataToDb({
     required String url,
     required String shopName,
     required String mobile,
     required String dialog,
   }) async {
     User? user = FirebaseAuth.instance.currentUser;
-    DocumentReference _vendors = FirebaseFirestore.instance.collection("vendors").doc(user!.uid);
+    DocumentReference _vendors =
+        FirebaseFirestore.instance.collection("vendors").doc(user!.uid);
     await _vendors.set({
       "uid": user.uid,
       "shopName": shopName,
@@ -160,8 +158,6 @@ class AuthProvider extends ChangeNotifier {
       "accVerified": true,
     });
   }
- return null;
-
 }
 
 
@@ -173,6 +169,15 @@ class AuthProvider extends ChangeNotifier {
 
 
 
+
+
+
+
+
+
+
+
+// 
 /*
     // Perform reverse geocoding using Google Maps Geocoding API
     const apiKey = 'YOUR_GOOGLE_MAPS_API_KEY';
