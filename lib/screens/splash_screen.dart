@@ -1,13 +1,13 @@
 import 'dart:async';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:kiranjaapp_supplier/screens/register_screen.dart';
 import 'home_screen.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key? key}) : super(key: key); // Fix the constructor
+  const SplashScreen({Key? key}) : super(key: key);
 
   static const String id = "splash-screen";
 
@@ -50,8 +50,7 @@ class _SplashScreenState extends State<SplashScreen> {
               height: 20,
             ),
             const CircularProgressIndicator(
-              valueColor:
-                  AlwaysStoppedAnimation<Color>(Colors.white), // Fix color type
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
             )
           ],
         ),
