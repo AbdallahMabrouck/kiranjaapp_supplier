@@ -1,216 +1,151 @@
-
-
-
-import 'package:flutter/cupertino.dart';
+import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:location/location.dart';
+import 'package:geocoding/geocoding.dart';
 
-class ProductProvider with ChangeNotifier{
-  String selectedCategory;
-  String selectedSubCategory;
-  String categoryImage;
-  File image;
-  String pickerError;
-  String shopName; 
-  String productUrl;
+class AuthProvider extends ChangeNotifier {
+  File? image;
+  bool isPicAvail = false;
+  String pickerError = "";
+  String error = "";
 
-  selectCategory(mainCategory, categoryImage){
-    this.selectedCategory = mainCategory;
-    this.categoryImage = categoryImage;
-    // need to bring image here
-    notifyListeners();
+  // shop data
+  double? shopLatitude;
+  double? shopLongitude;
+  String? shopAddress;
+  String? placeName;
+  String? email;
 
-  }
-
-  selectSubCategory(selected){
-    this.selectedSubCategory = selected;
-    notifyListeners();
-
-  }
-
-  getShopName(shopName){
-    this.shopName = shopName;
-    notifyListeners();
-  }
-
-  resetProvider(){
-    // remove all the existing data before update next product
-  this.selectedCategory = null;
-  this.selectedSubCategory = null;
-  this.categoryImage = null;
-  this.image = null;
-  this.productUrl = null;
-  notifyListeners();
-  }
-
-  // upload product image
-
-  Future<String> uploadProductImage(filePath, productName) async {
-    File file = File(filePath); 
-    // need file path to upload, we already have inside provider
-    var timeStamp = Timestamp.now().millisecondsSinceEpoch;
-
-    FirebaseStorage _storage = FirebaseStorage.instance;
-
-    try {
-      await _storage.ref("productImage/$shopName/$productName$timeStamp").putFile(file);
-    } on FirebaseException catch (e) {
-      // e.g, e.code == "cancelled"
-      print (e.code);
-    }
-    // now after upload file we need to file url path to save in database
-    String downloadURL = await _storage.ref("productImage/$shopName$productName$timeStamp").getDownloadURL();
-    productUrl == downloadURL;
-    notifyListeners();
-    return downloadURL;
-  }
-
-  Future<File>getProductImage() async {
+  Future<File?> getImage() async {
     final picker = ImagePicker();
-    final pickedFile = await picker.getImage(source: ImageSource.gallery, imageQuality:20);
-    if(pickedFile != null){
-      this.image = File(pickedFile.path);
+    final pickedFile = await picker.pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 20,
+    );
+    if (pickedFile != null) {
+      image = File(pickedFile.path);
       notifyListeners();
     } else {
-      this.pickerError = "No image selected";
-      print ("No image selected");
+      pickerError = "No image selected";
+      print("No image selected");
       notifyListeners();
     }
-    return this.image;
+    return image;
   }
 
-  alertDialog({context, title, content}){
-    showCupertinoDialog(
-      context: context, 
-      builder: (BuildContext context){
-        return CupertinoAlertDialog(
-          title: Text(title),
-          content: Text(content),
-          actions: [
-            CupertinoDialogAction(child: const Text("OK"), 
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            )
-          ],
-        );
-      });
-  }
+  Future<void> getCurrentAddress() async {
+    Location location = Location();
 
-  // save product data to firestore
-  Future<void>saveProductDataToDb(
-    // need to bring these details from Add Product Screen
-   { productName,
-    description,
-    price, 
-    comparedPrice,
-    collection, 
-    brand,
-    sku, 
-    categoryName,
-    weight,
-    tax,
-    stockQty, 
-    lowStockQty,
-    context,
+    bool _serviceEnabled;
+    PermissionStatus _permissionGranted;
+    LocationData _locationData;
+
+    _serviceEnabled = await location.serviceEnabled();
+    if (!_serviceEnabled) {
+      _serviceEnabled = await location.requestService();
+      if (!_serviceEnabled) {
+        return;
+      }
     }
-  ){
-    
-    var timeStamp = DateTime.now().millisecondsSinceEpoch;
-    // this will be used as product id
-    User user = FirebaseAuth.instance.currentUser;
-    CollectionReference _products = FirebaseFirestore.instance.collection("products");
+
+    _permissionGranted = await location.hasPermission();
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await location.requestPermission();
+      if (_permissionGranted != PermissionStatus.granted) {
+        return;
+      }
+    }
+
+    _locationData = await location.getLocation();
+    shopLatitude = _locationData.latitude;
+    shopLongitude = _locationData.longitude;
+    notifyListeners();
+
+    final coordinates = Coordinates(shopLatitude!, shopLongitude!);
+    var _addresses = await placemarkFromCoordinates(
+        coordinates.latitude, coordinates.longitude);
+    var shopAddress = _addresses.first;
+    this.shopAddress = shopAddress.street;
+    placeName = shopAddress.name;
+    notifyListeners();
+  }
+
+  Future<UserCredential?> registerVendor(String email, String password) async {
+    this.email = email;
+    notifyListeners();
+    UserCredential? userCredential;
     try {
-      _products.doc(timeStamp.toString()).set({
-      "seller" : {"shopName" : this.shopName, "sellerUid" :user.uid },
-      "productName" : productName,
-      "description" : description,
-      "price" : price, 
-      "comparedPrice" : comparedPrice, 
-      "collection" : collection,
-      "brand" : brand, 
-      "sku" : sku, 
-      "category" : {"mainCategory" : selectedCategory, "subCategory" : selectedSubCategory, "categoryImage" : categoryImage},
-      "weight" : weight,
-      "tax" : tax,
-      "stockQty" : stockQty, 
-      "lowStockQty" : lowStockQty, 
-      "published" : false, 
-      "productId" : timeStamp.toString(),
-      "productImage" : productUrl,
-    }):
-    alertDialog(
-      context: context,
-      title: "SAVE DATA",
-      content: "Product Details saved successifully"
-    );
-
-    } catch(e) {
-      alertDialog(
-      context: context,
-      title: "SAVE DATA",
-      content: e.toString()
-    );
-
+      userCredential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+    } on FirebaseAuthException {
+      // Handle exceptions
+    } catch (e) {
+      // Handle other exceptions
     }
-    return null;
+    return userCredential;
   }
 
-  Future<void>updateProduct(
-    // need to bring these details from Add Product Screen
-   { productName,
-    description,
-    price, 
-    comparedPrice,
-    collection, 
-    brand,
-    sku, 
-    categoryName,
-    weight,
-    tax,
-    stockQty, 
-    lowStockQty,
-    context,
-    productId,
-    image, 
-    category, 
-    subCategory, 
-    categoryImage, 
-
-    }
-  ){
-    
-    CollectionReference _products = FirebaseFirestore.instance.collection("products");
+  Future<UserCredential?> loginVendor(String email, String password) async {
+    this.email = email;
+    notifyListeners();
+    UserCredential? userCredential;
     try {
-      _products.doc(productId).update({
-      "productName" : productName,
-      "description" : description,
-      "price" : price, 
-      "comparedPrice" : comparedPrice, 
-      "collection" : collection,
-      "brand" : brand, 
-      "sku" : sku, 
-      "category" : {"mainCategory" : category, "subCategory" : subCategory, "categoryImage" : categoryImage ?? categoryImage},
-      "weight" : weight,
-      "tax" : tax,
-      "stockQty" : stockQty, 
-      "lowStockQty" : lowStockQty, 
-      "productImage" : productUrl == null ? image : productUrl,
+      userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+    } on FirebaseAuthException {
+      // Handle exceptions
+    } catch (e) {
+      // Handle other exceptions
+    }
+    return userCredential;
+  }
+
+  Future<void> resetPassword(String email) async {
+    this.email = email;
+    notifyListeners();
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(
+        email: email,
+      );
+    } on FirebaseAuthException {
+      // Handle exceptions
+    } catch (e) {
+      // Handle other exceptions
+    }
+  }
+
+  Future<void> saveVendorDataToDb({
+    required String url,
+    required String shopName,
+    required String mobile,
+    required String dialog,
+  }) async {
+    User? user = FirebaseAuth.instance.currentUser;
+    DocumentReference _vendors =
+        FirebaseFirestore.instance.collection("vendors").doc(user!.uid);
+    await _vendors.set({
+      "uid": user.uid,
+      "shopName": shopName,
+      "mobile": mobile,
+      "email": email,
+      "dialog": dialog,
+      "address": "${placeName ?? ''} : ${shopAddress ?? ''}",
+      "location": GeoPoint(shopLatitude ?? 0, shopLongitude ?? 0),
+      "shopOpen": true,
+      "rating": 0.00,
+      "totalRating": 0,
+      "isTopPicked": true,
+      "imageUrl": url,
+      "accVerified": true,
     });
-    alertDialog(
-      context: context,
-      title: "SAVE DATA",
-      content: "Product Details saved successifully"
-    );
-
-    } catch(e) {
-      alertDialog(
-      context: context,
-      title: "SAVE DATA",
-      content: e.toString()
-    );
-
-    }
-    return null;
   }
 }
 
@@ -332,4 +267,4 @@ class ProductProvider with ChangeNotifier {
     productData!["approved"] = false;
     notifyListeners();
   }
-}
+}*/

@@ -1,21 +1,18 @@
-import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:kiranjaapp_supplier/provider/auth_provider.dart';
+import 'package:kiranjaapp_supplier/screens/splash_screen.dart';
 import 'package:provider/provider.dart';
-
 
 void main() async {
   Provider.debugCheckInvalidValueType = null;
   WidgetsFlutterBinding.ensureInitialized();
 
-  runApp( MultiProvider(
-    providers: [
-      provider (create: (_) => AuthProvider()),
-      // provider (create: (_) => ProductProvider()),
-      // provider (create: (_) => OrderProvider()),
-    ], 
-    child: const MyApp()
-  ));
+  runApp(MultiProvider(providers: [
+    Provider(create: (_) => AuthProvider()),
+    // provider (create: (_) => ProductProvider()),
+    // provider (create: (_) => OrderProvider()),
+  ], child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -26,19 +23,17 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        
         primarySwatch: Colors.blue,
       ),
-      builder: EasyLoading.init() ,
+      builder: EasyLoading.init(),
       initialRoute: SplashScreen.id,
       routes: {
-        SplashScreen.id :(context) => const SplashScreen(),
+        SplashScreen.id: (context) => const SplashScreen(),
         // RegisterScreen.id :(context) => const RegisterScreen(),
         // HomeScreen.id :(context) => const HomeScreen(),
         // AddNewProductScreen.id :(context) => const AddNewProductScreen(),
         // AddEditCoupon.id :(context) => const AddEditCoupon()
       },
-  
     );
   }
 }
@@ -124,4 +119,4 @@ class MyApp extends StatelessWidget {
       },
     );
   }
-}
+}*/
