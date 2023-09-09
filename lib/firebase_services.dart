@@ -11,8 +11,8 @@ class FirebaseServices {
   User? user = FirebaseAuth.instance.currentUser;
   final CollectionReference vendor =
       FirebaseFirestore.instance.collection("Vendor");
-  final CollectionReference categories =
-      FirebaseFirestore.instance.collection("categories");
+  final CollectionReference category =
+      FirebaseFirestore.instance.collection("category");
   final CollectionReference mainCat =
       FirebaseFirestore.instance.collection("mainCategories");
   final CollectionReference subCat =
@@ -21,6 +21,8 @@ class FirebaseServices {
       FirebaseFirestore.instance.collection("product");
   final CollectionReference products =
       FirebaseFirestore.instance.collection("products");
+  final CollectionReference vendorbanner =
+      FirebaseFirestore.instance.collection('vendorbanner');
 
   firebase_storage.FirebaseStorage storage =
       firebase_storage.FirebaseStorage.instance;
@@ -66,6 +68,33 @@ class FirebaseServices {
     return products
         .add(data)
         .then((value) => scaffold(context, "Product saved"));
+  }
+
+  Future<void> publishProduct({id}) {
+    return products.doc(id).update({
+      "published": true,
+    });
+  }
+
+  Future<void> unPublishProduct({id}) {
+    return products.doc(id).update({
+      "published": false,
+    });
+  }
+
+  Future<void> deleteProduct({required String id}) {
+    return products.doc(id).delete();
+  }
+
+  Future<void> saveBanner(url) {
+    return vendorbanner.add({
+      "imageUrl": url,
+      "sellerUid": user!.uid,
+    });
+  }
+
+  Future<void> deleteBanner({required String id}) {
+    return vendorbanner.doc(id).delete();
   }
 
   String formattedDate(date) {
