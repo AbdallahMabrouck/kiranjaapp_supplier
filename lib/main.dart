@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:kiranjaapp_supplier/provider/auth_provider.dart';
+import 'package:kiranjaapp_supplier/screens/home_screen.dart';
+import 'package:kiranjaapp_supplier/screens/login_screen.dart';
 import 'package:kiranjaapp_supplier/screens/register_screen.dart';
 import 'package:kiranjaapp_supplier/screens/splash_screen.dart';
 import 'package:provider/provider.dart';
@@ -31,7 +33,8 @@ class MyApp extends StatelessWidget {
       routes: {
         SplashScreen.id: (context) => const SplashScreen(),
         RegisterScreen.id: (context) => const RegisterScreen(),
-        // HomeScreen.id :(context) => const HomeScreen(),
+        HomeScreen.id: (context) => const HomeScreen(),
+        LoginScreen.id: (context) => const LoginScreen(),
         // AddNewProductScreen.id :(context) => const AddNewProductScreen(),
         // AddEditCoupon.id :(context) => const AddEditCoupon()
       },
