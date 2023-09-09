@@ -43,8 +43,6 @@ class FirebaseServices {
       ),
     );
 
-    provider!.getFormData(imageUrls: imageUrls);
-
     return imageUrls;
   }
 
