@@ -310,7 +310,7 @@ class _RegisterFormState extends State<RegisterForm> {
                               _authData
                                   .registerVendor(email, password)
                                   .then((credential) {
-                                if (credential.user!.uid != null) {
+                                if (credential!.user!.uid != null) {
                                   // user is registered
                                   // will upload profile pic to firestore
                                   uploadFile(_authData.image!.path).then((url) {
