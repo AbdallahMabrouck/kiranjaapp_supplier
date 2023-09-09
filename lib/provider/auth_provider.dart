@@ -128,10 +128,12 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
     try {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
-    } on FirebaseAuthException {
-      // Handle exceptions
+    } on FirebaseAuthException catch (e) {
+      error = e.code;
+      notifyListeners();
     } catch (e) {
-      // Handle other exceptions
+      error = e.toString();
+      notifyListeners();
     }
   }
 
