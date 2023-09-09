@@ -22,10 +22,10 @@ class _RegisterFormState extends State<RegisterForm> {
   final _addressTextControler = TextEditingController();
   final _nameTextControler = TextEditingController();
   final _dialogTextControler = TextEditingController();
-  String email;
-  String password;
-  String shopName;
-  String mobile;
+  String email = "";
+  String password = "";
+  String shopName = "";
+  String mobile = "";
   bool _isLoading = false;
 
   Future<String> uploadFile(filePath) async {
@@ -310,11 +310,11 @@ class _RegisterFormState extends State<RegisterForm> {
                               _authData
                                   .registerVendor(email, password)
                                   .then((credential) {
-                                if (credential!.user!.uid != null) {
+                                if (credential != null) {
                                   // user is registered
                                   // will upload profile pic to firestore
                                   uploadFile(_authData.image!.path).then((url) {
-                                    if (url != null) {
+                                    if (url.isNotEmpty) {
                                       // save vendor details to database
                                       _authData.saveVendorDataToDb(
                                           url: url,
