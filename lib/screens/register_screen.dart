@@ -24,7 +24,7 @@ class RegisterScreen extends StatelessWidget {
                     children: [
                       ElevatedButton(
                         onPressed: () {
-                          // Navigator.pushNamed(context, LoginScreen.id);
+                          Navigator.pushNamed(context, LoginScreen.id);
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
