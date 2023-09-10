@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:kiranjaapp_supplier/screens/home_screen.dart';
 import 'package:provider/provider.dart';
 import '../provider/auth_provider.dart';
+import '../screens/login_screen.dart';
 
 class RegisterForm extends StatefulWidget {
   const RegisterForm({super.key});
@@ -346,6 +347,28 @@ class _RegisterFormState extends State<RegisterForm> {
                         },
                         child: const Text("Register",
                             style: TextStyle(color: Colors.white)),
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, LoginScreen.id);
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: RichText(
+                          text: const TextSpan(text: "", children: [
+                            TextSpan(
+                                text: "Already have an account ? ",
+                                style: TextStyle(fontWeight: FontWeight.bold)),
+                            TextSpan(
+                                text: "Login",
+                                style: TextStyle(fontWeight: FontWeight.bold))
+                          ]),
+                        ),
                       ),
                     ),
                   ],
