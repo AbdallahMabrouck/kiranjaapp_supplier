@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import '../firebase_services.dart';
+import '../services/firebase_services.dart';
 
 class BannerCard extends StatelessWidget {
   const BannerCard({Key? key}) : super(key: key);
