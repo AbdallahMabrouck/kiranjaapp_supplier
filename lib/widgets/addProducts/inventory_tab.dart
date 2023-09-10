@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
+/*import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../firebase_services.dart';
+import '../../services/firebase_services.dart';
 import '../../provider/product_provider.dart';
 
 class InventoryTab extends StatefulWidget {
@@ -68,4 +68,4 @@ class _InventoryTabState extends State<InventoryTab>
       );
     });
   }
-}
+}*/

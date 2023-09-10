@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:kiranjaapp_supplier/widgets/products/product_details_screen.dart';
 import 'package:search_page/search_page.dart';
-import '../../firebase_services.dart';
+import '../../services/firebase_services.dart';
 import '../../models/product_model.dart';
 
 class ProductCard extends StatefulWidget {
