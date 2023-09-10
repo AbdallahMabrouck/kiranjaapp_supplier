@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../firebase_services.dart';
+import '../services/firebase_services.dart';
 import '../provider/product_provider.dart';
 
 class CategoryList extends StatelessWidget {
