@@ -2,7 +2,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import '../../firebase_services.dart';
+import '../../services/firebase_services.dart';
 import '../../models/product_model.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
