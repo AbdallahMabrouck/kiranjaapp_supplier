@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:kiranjaapp_supplier/provider/auth_provider.dart';
+import 'package:kiranjaapp_supplier/provider/order_provider.dart';
+import 'package:kiranjaapp_supplier/provider/product_provider.dart';
 import 'package:kiranjaapp_supplier/screens/home_screen.dart';
 import 'package:kiranjaapp_supplier/screens/login_screen.dart';
 import 'package:kiranjaapp_supplier/screens/register_screen.dart';
@@ -13,8 +15,8 @@ void main() async {
 
   runApp(MultiProvider(providers: [
     Provider(create: (_) => AuthProvider()),
-    // provider (create: (_) => ProductProvider()),
-    // provider (create: (_) => OrderProvider()),
+    Provider(create: (_) => ProductProvider()),
+    Provider(create: (_) => OrderProvider()),
   ], child: const MyApp()));
 }
 
@@ -41,11 +43,6 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-
-// copy paste main.dart from client app
-// coppy splash screen from client app
-
 
 
 
