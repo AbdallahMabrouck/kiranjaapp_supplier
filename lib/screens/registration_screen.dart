@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../firebase_services.dart';
+import '../services/firebase_services.dart';
 import 'landing_screen.dart';
 
 class RegistrationScreen extends StatefulWidget {

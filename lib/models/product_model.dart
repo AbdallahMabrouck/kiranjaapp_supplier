@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../firebase_services.dart';
+import '../services/firebase_services.dart';
 
 class Product {
   Product(
