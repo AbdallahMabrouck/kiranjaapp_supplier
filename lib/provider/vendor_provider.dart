@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import '../firebase_services.dart';
+import '../services/firebase_services.dart';
 import '../models/vendor_model.dart';
 
 class VendorProvider with ChangeNotifier {
