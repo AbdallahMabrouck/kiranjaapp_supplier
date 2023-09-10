@@ -162,5 +162,6 @@ class AuthProvider extends ChangeNotifier {
       "imageUrl": url,
       "accVerified": true,
     });
+    return;
   }
 }
