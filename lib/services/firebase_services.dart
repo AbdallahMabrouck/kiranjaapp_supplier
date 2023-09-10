@@ -23,7 +23,8 @@ class FirebaseServices {
       FirebaseFirestore.instance.collection("products");
   final CollectionReference vendorbanner =
       FirebaseFirestore.instance.collection('vendorbanner');
-
+  CollectionReference coupons =
+      FirebaseFirestore.instance.collection('coupons');
   CollectionReference boys = FirebaseFirestore.instance.collection('boys');
   CollectionReference vendors =
       FirebaseFirestore.instance.collection('vendors');
@@ -101,6 +102,26 @@ class FirebaseServices {
 
   Future<void> deleteBanner({required String id}) {
     return vendorbanner.doc(id).delete();
+  }
+
+  Future<void> saveCoupon(
+      {document, title, discountRate, expiry, details, active}) {
+    if (document == null) {
+      return coupons.doc(title).set({
+        "title": title,
+        "discountRate": discountRate,
+        "Expiry": expiry,
+        "details": details,
+        "sellerId": user!.uid,
+      });
+    }
+    return coupons.doc(title).update({
+      "title": title,
+      "discountRate": discountRate,
+      "Expiry": expiry,
+      "details": details,
+      "sellerId": user!.uid,
+    });
   }
 
   Future<DocumentSnapshot> getShopDetails() async {
