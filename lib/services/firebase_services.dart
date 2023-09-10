@@ -24,6 +24,12 @@ class FirebaseServices {
   final CollectionReference vendorbanner =
       FirebaseFirestore.instance.collection('vendorbanner');
 
+  CollectionReference boys = FirebaseFirestore.instance.collection('boys');
+  CollectionReference vendors =
+      FirebaseFirestore.instance.collection('vendors');
+  CollectionReference orders = FirebaseFirestore.instance.collection('orders');
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
+
   firebase_storage.FirebaseStorage storage =
       firebase_storage.FirebaseStorage.instance;
 
@@ -95,6 +101,29 @@ class FirebaseServices {
 
   Future<void> deleteBanner({required String id}) {
     return vendorbanner.doc(id).delete();
+  }
+
+  Future<DocumentSnapshot> getShopDetails() async {
+    DocumentSnapshot doc = await vendors.doc(user!.uid).get();
+    return doc;
+  }
+
+  Future<DocumentSnapshot> getCustomerDetails(id) async {
+    DocumentSnapshot doc = await users.doc(id).get();
+    return doc;
+  }
+
+  Future<void> selectBoys({orderId, location, name, image, phone}) {
+    var result = orders.doc(orderId).update({
+      "deliveryBoy": {
+        "location": location,
+        "name": name,
+        "image": image,
+        "phone": phone
+      }
+    });
+
+    return result;
   }
 
   String formattedDate(date) {
