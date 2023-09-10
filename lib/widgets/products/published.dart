@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import '../../firebase_services.dart';
+import '../../services/firebase_services.dart';
 import '../../screens/edit_view_product.dart';
 
 class PublishedProducts extends StatelessWidget {
