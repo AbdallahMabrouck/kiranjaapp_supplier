@@ -121,7 +121,7 @@ class ProductProvider with ChangeNotifier {
       required double tax,
       required int stockQty,
       required int lowStockQty,
-      required int context}) async {
+      required context}) async {
     var timeStamp = DateTime.now().millisecondsSinceEpoch;
     // this will be used as product id
     User? user = FirebaseAuth.instance.currentUser;
