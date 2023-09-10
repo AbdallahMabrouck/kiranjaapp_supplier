@@ -23,22 +23,24 @@ class _OrderSummaryCardState extends State<OrderSummaryCard> {
   @override
   void initState() {
     super.initState();
-    _services.getCustomerDetails(widget.document.data()!["userId"]).then((value) {
-      if (value != null) {
+    _services
+        .getCustomerDetails(
+            (widget.document.data() as Map<String, dynamic>)["userId"])
+        .then((value) {
+      if (value.exists) {
         setState(() {
           _customer = value;
         });
       } else {
         print("No data");
       }
-    }
-    
-    );
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    final Map<String, dynamic>? documentData = widget.document.data() as Map<String, dynamic>?;
+    final Map<String, dynamic>? documentData =
+        widget.document.data() as Map<String, dynamic>?;
 
     return Container(
       color: Colors.white,
@@ -70,11 +72,13 @@ class _OrderSummaryCardState extends State<OrderSummaryCard> {
               children: [
                 Text(
                   "Payment Type : ${documentData?["cod"] == true ? "Cash on Delivery" : "Paid Online"}",
-                  style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      fontSize: 12, fontWeight: FontWeight.bold),
                 ),
                 Text(
                   "Amount : \$${documentData?["total"]?.toStringAsFixed(0) ?? ""}",
-                  style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      fontSize: 12, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
@@ -91,7 +95,8 @@ class _OrderSummaryCardState extends State<OrderSummaryCard> {
                   ),
                   Text(
                     "${_customer!["firstName"]} ${_customer!["lastName"]}",
-                    style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontSize: 12, fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
@@ -138,7 +143,9 @@ class _OrderSummaryCardState extends State<OrderSummaryCard> {
                   return ListTile(
                     leading: CircleAvatar(
                       backgroundColor: Colors.white,
-                      child: Image.network(documentData?["products"][index]["productImage"] ?? ""),
+                      child: Image.network(documentData?["products"][index]
+                              ["productImage"] ??
+                          ""),
                     ),
                     title: Text(
                       documentData?['products'][index]["productName"] ?? "",
@@ -153,7 +160,8 @@ class _OrderSummaryCardState extends State<OrderSummaryCard> {
                 itemCount: documentData?["products"]?.length ?? 0,
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 12, right: 12, top: 8, bottom: 8),
+                padding: const EdgeInsets.only(
+                    left: 12, right: 12, top: 8, bottom: 8),
                 child: Card(
                   elevation: 4,
                   child: Padding(
@@ -171,11 +179,14 @@ class _OrderSummaryCardState extends State<OrderSummaryCard> {
                             ),
                             Text(
                               documentData?["seller"]["shopName"] ?? "",
-                              style: const TextStyle(color: Colors.grey, fontSize: 12),
+                              style: const TextStyle(
+                                  color: Colors.grey, fontSize: 12),
                             ),
                           ],
                         ),
-                        const SizedBox(height: 10,),
+                        const SizedBox(
+                          height: 10,
+                        ),
                         if (documentData?["discount"] != null)
                           // this will show up only if discount is available
                           Container(
@@ -192,11 +203,14 @@ class _OrderSummaryCardState extends State<OrderSummaryCard> {
                                     ),
                                     Text(
                                       "${documentData?["discount"]}",
-                                      style: const TextStyle(color: Colors.grey, fontSize: 12),
+                                      style: const TextStyle(
+                                          color: Colors.grey, fontSize: 12),
                                     ),
                                   ],
                                 ),
-                                const SizedBox(height: 10,),
+                                const SizedBox(
+                                  height: 10,
+                                ),
                                 Row(
                                   children: [
                                     const Text(
@@ -208,14 +222,17 @@ class _OrderSummaryCardState extends State<OrderSummaryCard> {
                                     ),
                                     Text(
                                       "${documentData?["discountCode"]}",
-                                      style: const TextStyle(color: Colors.grey, fontSize: 12),
+                                      style: const TextStyle(
+                                          color: Colors.grey, fontSize: 12),
                                     ),
                                   ],
                                 ),
                               ],
                             ),
                           ),
-                        const SizedBox(height: 10,),
+                        const SizedBox(
+                          height: 10,
+                        ),
                         Row(
                           children: [
                             const Text(
@@ -227,7 +244,8 @@ class _OrderSummaryCardState extends State<OrderSummaryCard> {
                             ),
                             Text(
                               "\$${documentData?["deliveryFee"]?.toString() ?? ""}",
-                              style: const TextStyle(color: Colors.grey, fontSize: 12),
+                              style: const TextStyle(
+                                  color: Colors.grey, fontSize: 12),
                             ),
                           ],
                         ),
@@ -238,9 +256,15 @@ class _OrderSummaryCardState extends State<OrderSummaryCard> {
               ),
             ],
           ),
-          const Divider(height: 3, color: Colors.grey,),
+          const Divider(
+            height: 3,
+            color: Colors.grey,
+          ),
           _orderServices.statusContainer(widget.document, context),
-          const Divider(height: 3, color: Colors.grey,),
+          const Divider(
+            height: 3,
+            color: Colors.grey,
+          ),
         ],
       ),
     );
@@ -504,4 +528,4 @@ class _OrderSummaryCardState extends State<OrderSummaryCard> {
                             ),
                           );
   }
-}
+}*/
