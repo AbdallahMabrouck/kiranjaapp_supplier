@@ -143,6 +143,7 @@ class AuthProvider extends ChangeNotifier {
     required String shopName,
     required String mobile,
     required String dialog,
+    required String email, // Add this parameter
   }) async {
     User? user = FirebaseAuth.instance.currentUser;
     DocumentReference _vendors =
@@ -151,7 +152,7 @@ class AuthProvider extends ChangeNotifier {
       "uid": user.uid,
       "shopName": shopName,
       "mobile": mobile,
-      "email": email,
+      "email": email, // Use the email parameter
       "dialog": dialog,
       "address": "${placeName ?? ''} : ${shopAddress ?? ''}",
       "location": GeoPoint(shopLatitude ?? 0, shopLongitude ?? 0),

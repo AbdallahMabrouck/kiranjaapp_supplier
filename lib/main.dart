@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:kiranjaapp_supplier/provider/auth_provider.dart';
@@ -14,7 +15,7 @@ import 'package:provider/provider.dart';
 void main() async {
   Provider.debugCheckInvalidValueType = null;
   WidgetsFlutterBinding.ensureInitialized();
-
+  await Firebase.initializeApp();
   runApp(MultiProvider(providers: [
     Provider(create: (_) => AuthProvider()),
     Provider(create: (_) => ProductProvider()),
@@ -33,14 +34,14 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.indigo,
       ),
       builder: EasyLoading.init(),
-      initialRoute: RegisterScreen.id,
+      initialRoute: SplashScreen.id,
       routes: {
-        // SplashScreen.id: (context) => const SplashScreen(),
+        SplashScreen.id: (context) => const SplashScreen(),
         LoginScreen.id: (context) => const LoginScreen(),
         RegisterScreen.id: (context) => const RegisterScreen(),
         HomeScreen.id: (context) => const HomeScreen(),
-        // AddProductScreen.id: (context) => const AddProductScreen(),
-        // AddEditCoupon.id :(context) => const AddEditCoupon(document: "",)
+        AddProductScreen.id: (context) => const AddProductScreen(),
+        // AddEditCoupon.id :(context) => const AddEditCoupon(document:   )
       },
     );
   }

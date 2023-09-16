@@ -195,31 +195,36 @@ class _LoginScreenState extends State<LoginScreen> {
                                         backgroundColor: Colors.transparent,
                                       )
                                     : const Text(
-                                        "Login",
+                                        "LOGIN",
                                         style: TextStyle(
                                             color: Colors.white,
-                                            fontWeight: FontWeight.bold),
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18),
                                       )),
                           ),
                         ],
                       ),
                       Row(
                         children: [
-                          ElevatedButton(
-                              onPressed: () {
-                                Navigator.pushNamed(context, RegisterScreen.id);
-                              },
-                              child: RichText(
-                                  text: const TextSpan(text: "", children: [
-                                TextSpan(
-                                    text: "Don't have an account ? ",
-                                    style: TextStyle(color: Colors.white)),
-                                TextSpan(
-                                    text: "Register",
-                                    style: TextStyle(
-                                        color: Colors.red,
-                                        fontWeight: FontWeight.bold)),
-                              ]))),
+                          Expanded(
+                            child: ElevatedButton(
+                                onPressed: () {
+                                  Navigator.pushNamed(
+                                      context, RegisterScreen.id);
+                                },
+                                child: RichText(
+                                    text: const TextSpan(text: "", children: [
+                                  TextSpan(
+                                      text: "Don't have an account ?     ",
+                                      style: TextStyle(color: Colors.white)),
+                                  TextSpan(
+                                      text: "REGISTER",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold)),
+                                ]))),
+                          ),
                         ],
                       )
                     ],

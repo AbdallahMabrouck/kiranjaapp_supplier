@@ -8,7 +8,10 @@ class AddEditCoupon extends StatefulWidget {
   static const String id = "add-edit-coupon-screen";
   final DocumentSnapshot? document;
 
-  const AddEditCoupon({Key? key, required this.document}) : super(key: key);
+  const AddEditCoupon({
+    Key? key,
+    this.document,
+  }) : super(key: key);
 
   @override
   State<AddEditCoupon> createState() => _AddEditCouponState();

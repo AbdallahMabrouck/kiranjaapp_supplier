@@ -321,6 +321,7 @@ class _RegisterFormState extends State<RegisterForm> {
                                           url: url,
                                           mobile: mobile,
                                           shopName: shopName,
+                                          email: email,
                                           dialog: _dialogTextControler.text);
 
                                       setState(() {
@@ -345,31 +346,36 @@ class _RegisterFormState extends State<RegisterForm> {
                                 "Shop profile pic need to be added");
                           }
                         },
-                        child: const Text("Register",
-                            style: TextStyle(color: Colors.white)),
+                        child: const Text("REGISTER",
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 18)),
                       ),
                     ),
                   ],
                 ),
                 Row(
                   children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, LoginScreen.id);
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: RichText(
-                          text: const TextSpan(text: "", children: [
-                            TextSpan(
-                                text: "Already have an account ? ",
-                                style: TextStyle(fontWeight: FontWeight.bold)),
-                            TextSpan(
-                                text: "Login",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.red))
-                          ]),
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, LoginScreen.id);
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: RichText(
+                            text: const TextSpan(text: "", children: [
+                              TextSpan(
+                                  text: "Already have an account ?     ",
+                                  style:
+                                      TextStyle(fontWeight: FontWeight.bold)),
+                              TextSpan(
+                                  text: "LOGIN",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                      fontSize: 14))
+                            ]),
+                          ),
                         ),
                       ),
                     ),
