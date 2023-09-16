@@ -77,10 +77,10 @@ packages:
     dependency: "direct main"
     description:
       name: chips_choice
-      sha256: "593a9bf48238abb057f81b1bc33557f28588126d3bd8b9deae3123cc697aa1bf"
+      sha256: ba1c649293cba4e5d827b7f55681390e6c9bb9a98b45cc9128591000fb103d02
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.0"
+    version: "3.0.1"
   clock:
     dependency: transitive
     description:

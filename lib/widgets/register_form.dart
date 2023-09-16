@@ -366,7 +366,9 @@ class _RegisterFormState extends State<RegisterForm> {
                                 style: TextStyle(fontWeight: FontWeight.bold)),
                             TextSpan(
                                 text: "Login",
-                                style: TextStyle(fontWeight: FontWeight.bold))
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.red))
                           ]),
                         ),
                       ),

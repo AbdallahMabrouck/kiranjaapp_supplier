@@ -47,14 +47,17 @@ class _LoginScreenState extends State<LoginScreen> {
                         children: [
                           const Text(
                             "LOGIN",
-                            style: TextStyle(fontFamily: "", fontSize: 30),
+                            style: TextStyle(
+                                fontFamily: "",
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(
                             width: 20,
                           ),
                           Image.asset(
-                            "images/logo.png",
-                            height: 80,
+                            "assets/images/kiranja-logo.png",
+                            height: 160,
                           )
                         ],
                       ),
@@ -140,7 +143,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 'Forgot Password?',
                                 textAlign: TextAlign.end,
                                 style: TextStyle(
-                                    color: Colors.blue,
+                                    color: Colors.indigo,
                                     fontWeight: FontWeight.bold),
                               )),
                         ],
@@ -210,7 +213,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   text: const TextSpan(text: "", children: [
                                 TextSpan(
                                     text: "Don't have an account ? ",
-                                    style: TextStyle(color: Colors.black)),
+                                    style: TextStyle(color: Colors.white)),
                                 TextSpan(
                                     text: "Register",
                                     style: TextStyle(

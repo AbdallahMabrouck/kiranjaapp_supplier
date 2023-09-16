@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:kiranjaapp_supplier/screens/register_screen.dart';
 import 'home_screen.dart';
 import 'login_screen.dart';
 
@@ -24,9 +25,9 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(const Duration(seconds: 3), () {
       FirebaseAuth.instance.authStateChanges().listen((User? user) {
         if (user == null) {
-          Navigator.pushReplacementNamed(context, LoginScreen.id);
+          Navigator.pushReplacementNamed(context, RegisterScreen.id);
         } else {
-          Navigator.pushReplacementNamed(context, HomeScreen.id);
+          Navigator.pushReplacementNamed(context, LoginScreen.id);
         }
       });
     });
