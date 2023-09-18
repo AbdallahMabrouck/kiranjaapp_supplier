@@ -1,10 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:kiranjaapp_supplier/firebase_options.dart';
 import 'package:kiranjaapp_supplier/provider/auth_provider.dart';
 import 'package:kiranjaapp_supplier/provider/order_provider.dart';
 import 'package:kiranjaapp_supplier/provider/product_provider.dart';
-import 'package:kiranjaapp_supplier/screens/add_edit_coupon.dart';
 import 'package:kiranjaapp_supplier/screens/add_product_screen.dart';
 import 'package:kiranjaapp_supplier/screens/home_screen.dart';
 import 'package:kiranjaapp_supplier/screens/login_screen.dart';
@@ -12,10 +12,10 @@ import 'package:kiranjaapp_supplier/screens/register_screen.dart';
 import 'package:kiranjaapp_supplier/screens/splash_screen.dart';
 import 'package:provider/provider.dart';
 
-void main() async {
+Future<void> main() async {
   Provider.debugCheckInvalidValueType = null;
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(MultiProvider(providers: [
     Provider(create: (_) => AuthProvider()),
     Provider(create: (_) => ProductProvider()),

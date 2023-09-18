@@ -52,6 +52,42 @@
     },
     {
       "client_info": {
+        "mobilesdk_app_id": "1:1093489568508:android:c64a87b693d1043e49c579",
+        "android_client_info": {
+          "package_name": "com.example.kiranjaapp_driver"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1093489568508-9u5tol51md12g2b7ri672g4hngc1em38.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADL0bihbFLoJ1KM4bjKGZWXe2Z1N1p8wQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1093489568508-9u5tol51md12g2b7ri672g4hngc1em38.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1093489568508-4p60n24g2r2t9u5t2lceshrraqb3g7cs.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.kiranjaappAdmin"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:1093489568508:android:7e20e9a486030edc49c579",
         "android_client_info": {
           "package_name": "com.example.kiranjaapp_supplier"
